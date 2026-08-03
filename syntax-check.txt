@@ -1,0 +1,5 @@
+lib/storage.js: OK
+lib/handler.js: OK
+netlify/functions/api.js: OK
+netlify/functions/migrate.js: OK
+server.js: OK

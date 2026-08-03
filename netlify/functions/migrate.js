@@ -9,9 +9,11 @@ const BLOB_KEY = 'records';
 
 // 一次性迁移数据：将仓库中的 data/records.json 导入 Netlify Blobs
 // 用法：部署后访问 https://你的站点网址/.netlify/functions/migrate
-exports.handler = async () => {
+exports.handler = async (request) => {
   try {
-    const store = getStore({ name: BLOB_STORE_NAME });
+    // Netlify Functions 2.0 中，context 对象用于 Blobs 认证
+    const context = request && request.context;
+    const store = getStore(context ? { name: BLOB_STORE_NAME, context } : { name: BLOB_STORE_NAME });
 
     // 如果 Blobs 中已有数据，跳过迁移，避免覆盖线上真实数据
     const existing = await store.get(BLOB_KEY, { type: 'text' });
