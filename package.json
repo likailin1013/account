@@ -1,7 +1,6 @@
 {
   "name": "personal-account",
   "version": "1.0.0",
-<<<<<<< HEAD
   "description": "个人记账网站 - Node.js驱动，本地持久化（支持 Netlify 部署）",
   "main": "server.js",
   "scripts": {
@@ -15,14 +14,5 @@
   },
   "devDependencies": {
     "netlify-cli": "^17.37.1"
-=======
-  "description": "个人记账网站 - Node.js驱动，本地持久化",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "express": "^4.19.2"
->>>>>>> f02dd0f89fbc555803168072de27cb46ea764c25
   }
 }
