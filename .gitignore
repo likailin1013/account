@@ -1,5 +1,5 @@
 # 忽略node_modules目录
-node_modules/
+# node_modules/
 
 # 忽略Logs，以及文件名后缀为.log的文件
 logs
