@@ -2,18 +2,20 @@
 
 const fs = require('fs');
 const path = require('path');
-const { getStore } = require('@netlify/blobs');
+const { getStore, setEnvironmentContext } = require('@netlify/blobs');
 
 const BLOB_STORE_NAME = 'account-data';
 const BLOB_KEY = 'records';
 
 // 一次性迁移数据：将仓库中的 data/records.json 导入 Netlify Blobs
 // 用法：部署后访问 https://你的站点网址/.netlify/functions/migrate
-exports.handler = async (request) => {
+exports.handler = async (request, context) => {
   try {
-    // Netlify Functions 2.0 中，context 对象用于 Blobs 认证
-    const context = request && request.context;
-    const store = getStore(context ? { name: BLOB_STORE_NAME, context } : { name: BLOB_STORE_NAME });
+    // Netlify Functions 2.0 中，context 是 handler 的第二个参数，用于 Blobs 认证
+    if (context) {
+      setEnvironmentContext(context);
+    }
+    const store = getStore({ name: BLOB_STORE_NAME });
 
     // 如果 Blobs 中已有数据，跳过迁移，避免覆盖线上真实数据
     const existing = await store.get(BLOB_KEY, { type: 'text' });
