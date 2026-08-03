@@ -1,0 +1,23 @@
+# Netlify 部署配置
+# 个人记账网站 - Express 后端适配 Netlify Functions
+
+[build]
+  # Node 项目无需前端构建步骤，直接发布 public 目录下的静态文件
+  command = "echo 'No build step required'"
+  publish = "public"
+
+[functions]
+  directory = "netlify/functions"
+
+# 将 /api/* 请求重定向到 Netlify Function
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+# 所有其他请求回退到首页
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
