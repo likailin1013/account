@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#4f6ef7">
+  <title>个人记账</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <!-- 顶部月份切换 -->
+    <header class="header">
+      <button class="month-btn" id="prevMonth" aria-label="上个月">◀</button>
+      <div class="month-title" id="monthTitle">2026年8月</div>
+      <button class="month-btn" id="nextMonth" aria-label="下个月">▶</button>
+    </header>
+
+    <!-- 统计卡片 -->
+    <section class="summary">
+      <div class="summary-card">
+        <div class="summary-label">收入</div>
+        <div class="summary-value income" id="totalIncome">¥0.00</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">支出</div>
+        <div class="summary-value expense" id="totalExpense">¥0.00</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-label">结余</div>
+        <div class="summary-value balance" id="balance">¥0.00</div>
+      </div>
+    </section>
+
+    <!-- 分类占比 -->
+    <section class="card">
+      <div class="card-title">支出分类占比</div>
+      <div id="categoryStats" class="category-stats">
+        <div class="empty-tip">本月暂无支出记录</div>
+      </div>
+    </section>
+
+    <!-- 筛选 -->
+    <section class="card">
+      <div class="card-title">筛选</div>
+      <div class="filter-row">
+        <div class="type-filter" id="typeFilter">
+          <button class="filter-btn active" data-type="all">全部</button>
+          <button class="filter-btn" data-type="expense">支出</button>
+          <button class="filter-btn" data-type="income">收入</button>
+        </div>
+      </div>
+      <div class="category-filter" id="categoryFilter">
+        <button class="chip active" data-category="全部">全部</button>
+        <button class="chip" data-category="餐饮">餐饮</button>
+        <button class="chip" data-category="交通">交通</button>
+        <button class="chip" data-category="购物">购物</button>
+        <button class="chip" data-category="居住">居住</button>
+        <button class="chip" data-category="娱乐">娱乐</button>
+        <button class="chip" data-category="医疗">医疗</button>
+        <button class="chip" data-category="工资">工资</button>
+        <button class="chip" data-category="奖金">奖金</button>
+        <button class="chip" data-category="理财">理财</button>
+        <button class="chip" data-category="其他">其他</button>
+      </div>
+    </section>
+
+    <!-- 记录列表 -->
+    <section class="card">
+      <div class="card-title record-title-row">
+        <span>明细</span>
+        <div class="record-title-actions">
+          <button class="batch-btn" id="batchDeleteBtn" style="display:none">批量删除</button>
+          <button class="batch-btn" id="selectModeBtn">选择</button>
+        </div>
+      </div>
+      <div id="recordList" class="record-list">
+        <div class="empty-tip">加载中...</div>
+      </div>
+      <div class="batch-bar" id="batchBar" style="display:none">
+        <span id="selectedCount">已选 0 项</span>
+        <div class="batch-actions">
+          <button class="batch-action-btn" id="selectAllBtn">全选</button>
+          <button class="batch-action-btn danger" id="confirmBatchDelete">删除所选</button>
+          <button class="batch-action-btn" id="cancelBatchBtn">取消</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 底部留白（给固定按钮让位） -->
+    <div class="bottom-spacer"></div>
+  </div>
+
+  <!-- 底部固定按钮 -->
+  <button class="fab" id="addBtn">＋ 记一笔</button>
+
+  <!-- 录入弹窗 -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>记一笔</h3>
+        <button class="modal-close" id="closeModal">×</button>
+      </div>
+      <form id="recordForm">
+        <div class="type-toggle">
+          <button type="button" class="type-btn expense active" data-form-type="expense">支出</button>
+          <button type="button" class="type-btn income" data-form-type="income">收入</button>
+        </div>
+
+        <label class="form-group">
+          <span class="form-label">金额</span>
+          <input type="number" id="amount" name="amount" step="0.01" min="0.01" placeholder="0.00" required>
+        </label>
+
+        <label class="form-group">
+          <span class="form-label">分类</span>
+          <select id="category" name="category" required>
+            <option value="餐饮">餐饮</option>
+            <option value="交通">交通</option>
+            <option value="购物">购物</option>
+            <option value="居住">居住</option>
+            <option value="娱乐">娱乐</option>
+            <option value="医疗">医疗</option>
+            <option value="其他">其他</option>
+          </select>
+        </label>
+
+        <label class="form-group">
+          <span class="form-label">日期</span>
+          <input type="date" id="date" name="date" required>
+        </label>
+
+        <label class="form-group">
+          <span class="form-label">备注</span>
+          <input type="text" id="note" name="note" placeholder="选填">
+        </label>
+
+        <button type="submit" class="submit-btn">保存</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
